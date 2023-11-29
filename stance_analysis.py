@@ -104,13 +104,6 @@ def main():
     # Display the result
     print("ANOVA p-value:", anova_result.pvalue)
 
-    orthodox = pd.Series(winners_df[winners_df['Stance'] == "Orthodox"]['Win_ratio'])
-    southpaw = pd.Series(winners_df[winners_df['Stance'] == "Southpaw"]['Win_ratio'])
-    switch = pd.Series(winners_df[winners_df['Stance'] == "Switch"]['Win_ratio'])
-    open_stance = pd.Series(winners_df[winners_df['Stance'] == "Open Stance"]['Win_ratio'])
-    sideways = pd.Series(winners_df[winners_df['Stance'] == "Sideways"]['Win_ratio'])
-
-
     # JASON THIS IS WHERE TO PICK UP TOMORROW - ISSUE: STANCES ARE NOT OF THE SAME LENGTH FOR TUKEY DOWN BELOW, FIGURE IT OUT
 
     data_df = pd.DataFrame({'orthodox': orthodox.values, 'southpaw': southpaw.values, 'switch': switch.values, 
