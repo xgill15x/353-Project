@@ -1,4 +1,9 @@
 import pandas as pd
+from scipy.stats import f_oneway
+from statsmodels.stats import multicomp
+
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 def further_preprocessing(stance_data):
     stance_data = stance_data[~(stance_data['Winner'] == 'Draw')] # We don't care about fights ending in a draw
@@ -23,7 +28,7 @@ def main():
     # further preprocessing 
     stance_data = further_preprocessing(df)
 
-    print(stance_data)
+    # print(stance_data)
 
     # Extract stances and names of all the winners
     winners_info = []
@@ -59,9 +64,66 @@ def main():
 
     winners_df = pd.merge(winners_df, win_lose_count_df, on="Name", how="inner")
 
-    count = winners_df.groupby('Stance').count()
+    stance_counts = winners_df.groupby('Stance').count()
+    print(stance_counts)
 
-    print(count)
+    orthodox = pd.Series(winners_df[winners_df['Stance'] == "Orthodox"]['Win_ratio'])
+    southpaw = pd.Series(winners_df[winners_df['Stance'] == "Southpaw"]['Win_ratio'])
+    switch = pd.Series(winners_df[winners_df['Stance'] == "Switch"]['Win_ratio'])
+    open_stance = pd.Series(winners_df[winners_df['Stance'] == "Open Stance"]['Win_ratio'])
+    sideways = pd.Series(winners_df[winners_df['Stance'] == "Sideways"]['Win_ratio'])
+
+    # # Create histograms
+    # plt.figure(figsize=(12, 8))
+
+    # plt.subplot(2, 3, 1)
+    # sns.histplot(orthodox, kde=True)
+    # plt.title('Orthodox Stance')
+
+    # plt.subplot(2, 3, 2)
+    # sns.histplot(southpaw, kde=True)
+    # plt.title('Southpaw Stance')
+
+    # plt.subplot(2, 3, 3)
+    # sns.histplot(switch, kde=True)
+    # plt.title('Switch Stance')
+
+    # plt.subplot(2, 3, 4)
+    # sns.histplot(open_stance, kde=True)
+    # plt.title('Open Stance')
+
+    # plt.subplot(2, 3, 5)
+    # sns.histplot(sideways, kde=True)
+    # plt.title('Sideways Stance')
+
+    # plt.tight_layout()
+    # plt.show()
+
+    anova_result = f_oneway(orthodox, southpaw, switch, open_stance, sideways)
+
+    # Display the result
+    print("ANOVA p-value:", anova_result.pvalue)
+
+    orthodox = pd.Series(winners_df[winners_df['Stance'] == "Orthodox"]['Win_ratio'])
+    southpaw = pd.Series(winners_df[winners_df['Stance'] == "Southpaw"]['Win_ratio'])
+    switch = pd.Series(winners_df[winners_df['Stance'] == "Switch"]['Win_ratio'])
+    open_stance = pd.Series(winners_df[winners_df['Stance'] == "Open Stance"]['Win_ratio'])
+    sideways = pd.Series(winners_df[winners_df['Stance'] == "Sideways"]['Win_ratio'])
+
+
+    # JASON THIS IS WHERE TO PICK UP TOMORROW - ISSUE: STANCES ARE NOT OF THE SAME LENGTH FOR TUKEY DOWN BELOW, FIGURE IT OUT
+
+    data_df = pd.DataFrame({'orthodox': orthodox.values, 'southpaw': southpaw.values, 'switch': switch.values, 
+                        'open_stance': open_stance.values, 'sideways': sideways.values})
+    
+    print(data_df)
+
+    # data_melt = pd.melt(data_df)
+    # posthoc = multicomp.pairwise_tukeyhsd(
+    # data_melt['value'], data_melt['variable'],
+    # alpha=0.05)
+
+    # count = winners_df.groupby('Stance').count()
 
 
 
