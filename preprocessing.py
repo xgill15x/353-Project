@@ -7,7 +7,7 @@ def fill_na_with_median(df, column_name):
 def main():
     df = pd.read_csv('data.csv')
 
-    df = df[~(df['Winner'] == 'Draw')]
+    # df = df[~(df['Winner'] == 'Draw')] # We don't care about fights ending in a draw
     df.reset_index(inplace=True)
 
     numerical_columns = df.select_dtypes(include=['number'])
@@ -15,8 +15,7 @@ def main():
         fill_na_with_median(df, column)
 
     # Write the DataFrame to a CSV file
-    df.to_csv("recreate.csv", index=False)
-
+    df.to_csv("preprocessed.csv", index=False)
 
 if __name__=='__main__':
     main()
