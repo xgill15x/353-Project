@@ -110,15 +110,15 @@ def main():
     draw_plots(stance_data_list)
 
     # dealing with unequal sample sizes: https://www.statology.org/anova-unequal-sample-size/
-    # data has equal variance and roughly normal distribution => anova oneway
-    levene_result = stats.levene(orthodox, southpaw)
-    anova_result = stats.f_oneway(orthodox, southpaw)
+    # data does not have equal variance and roughly normal distribution => anova oneway
+    levene_result = stats.levene(orthodox, southpaw, switch)
+    kruskal_result = stats.kruskal(orthodox, southpaw, switch)
 
     # Display the result
     print("Levene p-value:", levene_result.pvalue)
-    print("ANOVA p-value:", anova_result.pvalue)
+    print("Kruskal p-value:", kruskal_result.pvalue)
 
-    stance_win_ratios = pd.concat([orthodox, southpaw], axis=1, keys=['orthodox', 'southpaw'])    
+    stance_win_ratios = pd.concat([orthodox, southpaw, switch], axis=1, keys=['orthodox', 'southpaw', 'switch'])    
     melted_df = stance_win_ratios.melt().dropna()
 
     posthoc = pg.pairwise_gameshowell(data=melted_df, dv='value', between='variable')
