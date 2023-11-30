@@ -20,23 +20,23 @@ def draw_plots(stance_data_list):
     plt.figure(figsize=(12, 8))
 
     plt.subplot(2, 3, 1)
-    sns.histplot(np.sqrt(stance_data_list[0]), kde=True)
+    sns.histplot(stance_data_list[0], kde=True)
     plt.title('Orthodox Stance')
 
     plt.subplot(2, 3, 2)
-    sns.histplot(np.sqrt(stance_data_list[1]), kde=True)
+    sns.histplot(stance_data_list[1], kde=True)
     plt.title('Southpaw Stance')
 
     plt.subplot(2, 3, 3)
-    sns.histplot(np.sqrt(stance_data_list[2]), kde=True)
+    sns.histplot(stance_data_list[2], kde=True)
     plt.title('Switch Stance')
 
     plt.subplot(2, 3, 4)
-    sns.histplot(np.sqrt(stance_data_list[3]), kde=True)
+    sns.histplot(stance_data_list[3], kde=True)
     plt.title('Open Stance')
 
     plt.subplot(2, 3, 5)
-    sns.histplot(np.sqrt(stance_data_list[4]), kde=True)
+    sns.histplot(stance_data_list[4], kde=True)
     plt.title('Sideways Stance')
 
     plt.tight_layout()
