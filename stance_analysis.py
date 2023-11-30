@@ -103,10 +103,12 @@ def main():
     open_stance = pd.Series(win_lose_count_df[win_lose_count_df['Stance'] == "Open Stance"]['Win_ratio'])
     sideways = pd.Series(win_lose_count_df[win_lose_count_df['Stance'] == "Sideways"]['Win_ratio'])
 
+    # transformations to deal with right-skewedness
     orthodox = np.sqrt(orthodox)
     southpaw = np.sqrt(southpaw)
     switch = np.sqrt(switch)
-    # didn't include open_stance or sideways (not enough data to comfortable do statistics on)
+    open_stance = np.sqrt(open_stance)
+    sideways = np.sqrt(sideways)
 
     stance_data_list = [orthodox, southpaw, switch, open_stance, sideways]
     draw_plots(stance_data_list)
