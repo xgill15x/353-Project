@@ -105,6 +105,8 @@ def main():
 
     orthodox = np.sqrt(orthodox)
     southpaw = np.sqrt(southpaw)
+    switch = np.sqrt(switch)
+    # didn't include open_stance or sideways (not enough data to comfortable do statistics on)
 
     stance_data_list = [orthodox, southpaw, switch, open_stance, sideways]
     draw_plots(stance_data_list)
