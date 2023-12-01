@@ -82,7 +82,7 @@ def main():
     # print(head_strike_count_avg, body_strikes_count_avg, leg_strike_count_avg)
     # -----------------------------------------------------------
 
-    # transforming strike values for normality - (commented bc still doesn't lead to best normality, non-parametric tests used instead)
+    # transforming strike values for normality - (commented bc still doesn't lead to best normality and variances are unequal, non-parametric tests used instead)
     # head_strikes = np.log(head_strikes)
     # body_strikes = np.log(body_strikes)
     # leg_strikes = np.log(leg_strikes)
