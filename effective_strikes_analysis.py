@@ -88,6 +88,12 @@ def main():
     won_by_leg = pd.DataFrame(won_by_leg)
     leg_strikes = won_by_leg['Leg_strikes']
 
+    # pre-transformed averages ----------------------------------
+    # head_strike_count_avg = head_strikes.mean()
+    # body_strikes_count_avg = body_strikes.mean()
+    # leg_strike_count_avg = leg_strikes.mean()
+    # print(head_strike_count_avg, body_strikes_count_avg, leg_strike_count_avg)
+
     head_strikes = np.log(head_strikes)
     body_strikes = np.log(body_strikes)
     leg_strikes = np.log(leg_strikes)
