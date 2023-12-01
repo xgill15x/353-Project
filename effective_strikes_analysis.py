@@ -41,8 +41,6 @@ def determine_dominant_strike(row):
 
 def main():
     df = pd.read_csv("raw_total_fight_data.csv", sep=';')
-    
-    # further preprocessing 
     df = further_preprocessing(df)
 
     winner_strike_stats = []
@@ -59,7 +57,6 @@ def main():
         winner_body_strikes = row[winner_colour + "_BODY"]
         winner_leg_strikes = row[winner_colour + "_LEG"]
 
-        
         winner_strike_stats.append({"Name": winner_name, "Head_strikes": winner_head_strikes, "Body_strikes": winner_body_strikes, "Leg_strikes": winner_leg_strikes})
 
     winner_strike_stats = pd.DataFrame(winner_strike_stats) # contains winner names and strike stats

@@ -44,8 +44,6 @@ def draw_plots(types_list):
 
 def main():
     df = pd.read_csv('preprocessed.csv')
-
-    # further preprocessing 
     df = further_preprocessing(df)
 
     # Extract stances and names of all the winners
