@@ -51,7 +51,7 @@ def main():
 
     red_wins_per_event, blue_wins_per_event = wins_per_event(red_wins, blue_wins)
 
-    # pre-transformed average strike count in matches where that strike was dominantly used (left for debugging/curiosity) ----------------------------------
+    # pre-transformed average colour wins per event (left for debugging/curiosity) ----------------------------------
     # red_wins_per_event_avg = red_wins_per_event.mean()
     # blue_wins_per_event_avg = blue_wins_per_event.mean()
     # print(red_wins_per_event_avg, blue_wins_per_event_avg)
