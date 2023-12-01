@@ -12,33 +12,38 @@ def further_preprocessing(stance_data):
     stance_data.reset_index(drop=True, inplace=True)
     return stance_data
 
-def draw_plots(stance_data_list):
+def draw_plots(types_list):
     # Create histograms
     plt.figure(figsize=(12, 8))
 
     plt.subplot(2, 3, 1)
-    sns.histplot(stance_data_list[0], kde=True)
+    sns.histplot(types_list[0], kde=True)
     plt.title('Head strike counts in Head-strike heavy wins')
 
     plt.subplot(2, 3, 2)
-    sns.histplot(stance_data_list[1], kde=True)
+    sns.histplot(types_list[1], kde=True)
     plt.title('Body strike counts in Body-strike heavy wins')
 
     plt.subplot(2, 3, 3)
-    sns.histplot(stance_data_list[2], kde=True)
+    sns.histplot(types_list[2], kde=True)
     plt.title('Leg strike counts in Leg-strike heavy wins')
 
     plt.tight_layout()
     plt.show()
 
-def main():
-    df = pd.read_csv('preprocessed.csv')
+def determine_dominant_strike(row):
+    if ((row['Head_strikes'] > row['Leg_strikes']) & (row['Head_strikes'] > row['Body_strikes'])):
+        return 'Head'
+    elif ((row['Body_strikes'] > row['Head_strikes']) & (row['Body_strikes'] > row['Leg_strikes'])):
+        return 'Body'
+    elif ((row['Leg_strikes'] > row['Head_strikes']) & (row['Leg_strikes'] > row['Body_strikes'])):
+        return 'Leg'
 
+def main():
     df = pd.read_csv("raw_total_fight_data.csv", sep=';')
+    
     # further preprocessing 
     df = further_preprocessing(df)
-
-    # print(df)
 
     winner_strike_stats = []
     for index, row in df.iterrows():
@@ -57,43 +62,30 @@ def main():
         
         winner_strike_stats.append({"Name": winner_name, "Head_strikes": winner_head_strikes, "Body_strikes": winner_body_strikes, "Leg_strikes": winner_leg_strikes})
 
-    winner_strike_stats = pd.DataFrame(winner_strike_stats) # contains winner names and stances
+    winner_strike_stats = pd.DataFrame(winner_strike_stats) # contains winner names and strike stats
+    
+    # removing attempted strikes from the expressinon - we only care about the strikes that landed
     winner_strike_stats['Head_strikes'] = winner_strike_stats['Head_strikes'].str.split(' ').str[0].astype(int)
     winner_strike_stats['Body_strikes'] = winner_strike_stats['Body_strikes'].str.split(' ').str[0].astype(int)
     winner_strike_stats['Leg_strikes'] = winner_strike_stats['Leg_strikes'].str.split(' ').str[0].astype(int)
-
+    
+    # adding dominant strike stat
+    winner_strike_stats['dominant_strike'] = winner_strike_stats.apply(determine_dominant_strike, axis=1)
+    winner_strike_stats.dropna(inplace=True)
     # print(winner_strike_stats)
 
-    won_by_head = []
-    won_by_body = []
-    won_by_leg = []
-    
-    for index, row in winner_strike_stats.iterrows():
-        if ((row['Head_strikes'] > row['Leg_strikes']) & (row['Head_strikes'] > row['Body_strikes'])):
-            won_by_head.append({"Head_strikes": row['Head_strikes'], "Body_strikes": row['Body_strikes'], "Leg_strikes": row['Leg_strikes']})
-        
-        elif ((row['Body_strikes'] > row['Head_strikes']) & (row['Body_strikes'] > row['Leg_strikes'])):
-            won_by_body.append({"Head_strikes": row['Head_strikes'], "Body_strikes": row['Body_strikes'], "Leg_strikes": row['Leg_strikes']})
-
-        elif ((row['Leg_strikes'] > row['Head_strikes']) & (row['Leg_strikes'] > row['Body_strikes'])):
-            won_by_leg.append({"Name": row['Name'],"Head_strikes": row['Head_strikes'], "Body_strikes": row['Body_strikes'], "Leg_strikes": row['Leg_strikes']})
-        
-
-    won_by_head = pd.DataFrame(won_by_head)
-    head_strikes = won_by_head['Head_strikes']
-
-    won_by_body = pd.DataFrame(won_by_body)
-    body_strikes = won_by_body['Body_strikes']
-
-    won_by_leg = pd.DataFrame(won_by_leg)
-    leg_strikes = won_by_leg['Leg_strikes']
+    head_strikes = winner_strike_stats[winner_strike_stats['dominant_strike'] == 'Head']['Head_strikes']
+    body_strikes = winner_strike_stats[winner_strike_stats['dominant_strike'] == 'Body']['Body_strikes']
+    leg_strikes = winner_strike_stats[winner_strike_stats['dominant_strike'] == 'Leg']['Leg_strikes']
 
     # pre-transformed averages ----------------------------------
     # head_strike_count_avg = head_strikes.mean()
     # body_strikes_count_avg = body_strikes.mean()
     # leg_strike_count_avg = leg_strikes.mean()
     # print(head_strike_count_avg, body_strikes_count_avg, leg_strike_count_avg)
+    # -----------------------------------------------------------
 
+    # transforming strike values for normality
     head_strikes = np.log(head_strikes)
     body_strikes = np.log(body_strikes)
     leg_strikes = np.log(leg_strikes)
