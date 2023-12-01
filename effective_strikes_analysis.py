@@ -75,7 +75,7 @@ def main():
     body_strikes = winner_strike_stats[winner_strike_stats['dominant_strike'] == 'Body']['Body_strikes']
     leg_strikes = winner_strike_stats[winner_strike_stats['dominant_strike'] == 'Leg']['Leg_strikes']
 
-    # pre-transformed averages (left for debugging/curiosity) ----------------------------------
+    # pre-transformed average strike count in matches where that strike was dominantly used (left for debugging/curiosity) ----------------------------------
     # head_strike_count_avg = head_strikes.mean()
     # body_strikes_count_avg = body_strikes.mean()
     # leg_strike_count_avg = leg_strikes.mean()

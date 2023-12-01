@@ -101,6 +101,15 @@ def main():
     open_stance = pd.Series(stance_data[stance_data['Stance'] == "Open Stance"]['Win_ratio'])
     sideways = pd.Series(stance_data[stance_data['Stance'] == "Sideways"]['Win_ratio'])
 
+    # pre-transformed average win ratios (left for debugging/curiosity) ----------------------------------
+    # orthodox_avg = orthodox.mean()
+    # southpaw_avg = southpaw.mean()
+    # switch_avg = switch.mean()
+    # open_stance_avg = open_stance.mean()
+    # sideways_avg = sideways.mean()
+    # print(orthodox_avg, southpaw_avg, switch_avg, open_stance_avg, sideways_avg)
+    # -----------------------------------------------------------
+
     # transformations to deal with right-skewedness
     orthodox = np.sqrt(orthodox)
     southpaw = np.sqrt(southpaw)
