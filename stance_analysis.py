@@ -6,11 +6,11 @@ import pingouin as pg
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-def further_preprocessing(stance_data):
-    stance_data = stance_data[~(stance_data['Winner'] == 'Draw')] # We don't care about fights ending in a draw
-    stance_data.dropna(inplace=True)
-    stance_data.reset_index(drop=True, inplace=True)
-    return stance_data
+def further_preprocessing(data):
+    data = data[~(data['Winner'] == 'Draw')] # We don't care about fights ending in a draw
+    data.dropna(inplace=True)
+    data.reset_index(drop=True, inplace=True)
+    return data
 
 def get_unique_stances(stance_data):
     return stance_data['R_Stance'].unique() # B_Stance contains the same values
@@ -42,7 +42,7 @@ def draw_plots(types_list):
     plt.tight_layout()
     plt.show()
 
-def fighter_win_loss_stats(preprocessed_data):
+def fighter_win_loss_stance_stats(preprocessed_data):
     # Extract stances and names of all the winners
     winners_info = []
     losers_info = []
@@ -91,7 +91,7 @@ def main():
     df = pd.read_csv('preprocessed_data.csv')
     df = further_preprocessing(df)
 
-    stance_data = fighter_win_loss_stats(df)
+    stance_data = fighter_win_loss_stance_stats(df)
     # print(stance_data)
 
     # Only want to keep people who have the competence to win with their stance (as we want to compare stances with ppl who represent them best)

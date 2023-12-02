@@ -1,19 +1,34 @@
 import pandas as pd
+import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.neighbors import KNeighborsRegressor
 
-def further_preprocessing(stance_data):
-    stance_data = stance_data[~(stance_data['Winner'] == 'Draw')] # We don't care about fights ending in a draw
-    stance_data.dropna(inplace=True)
-    stance_data.reset_index(drop=True, inplace=True)
-    return stance_data
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+def further_preprocessing(data):
+    data = data[~(data['Winner'] == 'Draw')] # We don't care about fights ending in a draw
+    data.reset_index(drop=True, inplace=True)
+    return data
+
+def plot_results(X_valid, y_valid, y_pred):
+    X_range = np.arange(0, X_valid.shape[0]).reshape(-1, 1)
+    
+    plt.figure(figsize=(20, 6))
+    plt.plot(X_range, y_valid, color='blue', label='True values')
+    plt.plot(X_range, y_pred, color='red', label='Predicted values', alpha=0.5)
+
+    plt.xlabel('X_valid points (labeled by ID #)')
+    plt.ylabel('Win ratios')
+    plt.legend()
+    plt.title('KNN Regression: True vs Predicted values')
+
+    plt.gca().set_aspect(125, adjustable='box')  # Adjust the aspect ratio
+    plt.show()
 
 def fighter_win_loss_stats(preprocessed_data):
-    # Extract stances and names of all the winners
-    winners_info = []
-    losers_info = []
     win_count_map = {}
     lose_count_map = {}
 
@@ -25,34 +40,20 @@ def fighter_win_loss_stats(preprocessed_data):
             loser = 'R'
 
         winner_name = row[winner + "_fighter"]
-        winner_stance = row[winner + "_Stance"]
-
         loser_name = row[loser + "_fighter"]
-        loser_stance = row[loser + "_Stance"]
 
         win_count_map[winner_name] = win_count_map.get(winner_name, 0) + 1  # if it exists increment by 1, if not init to 1
         lose_count_map[loser_name] = lose_count_map.get(loser_name, 0) + 1  # to track the amount of losses for a winner later on
-
-        winners_info.append({"Name": winner_name, "Stance": winner_stance})
-        losers_info.append({"Name": loser_name, "Stance": loser_stance})
         
-    winners_df = pd.DataFrame(winners_info) # contains winner names and stances
-    losers_df = pd.DataFrame(losers_info) # similar to above comment
-    winners_df.drop_duplicates(inplace=True)
-    losers_df.drop_duplicates(inplace=True)
-    
     # contains names and win/lose counts (each fighter will be a datapoint)
     win_count_df = pd.DataFrame(list(win_count_map.items()), columns=['Name', 'Win_count']) # contains winner names and no. of wins
     lose_count_df = pd.DataFrame(list(lose_count_map.items()), columns=['Name', 'Lose_count']) #
-    
-    winners_and_count = winners_df.merge(win_count_df, on='Name') # merges winner's stances and win counts into single df
-    losers_and_count = losers_df.merge(lose_count_df, on='Name')
-    
-    fighter_data = pd.merge(winners_and_count, losers_and_count, on=['Name', 'Stance'], how='outer') # combined df with all fighters stances and win/lose counts
+
+    fighter_data = win_count_df.merge(lose_count_df, on='Name', how='outer')
     fighter_data['Lose_count'] = fighter_data['Lose_count'].fillna(0) # if name not found in losses map, default to 0 losses
     fighter_data['Win_count'] = fighter_data['Win_count'].fillna(0) # if name not found in wins map, default to 0 wins
     fighter_data['Win_ratio'] = fighter_data['Win_count'] / (fighter_data['Win_count'] + fighter_data['Lose_count'])
-
+    
     return fighter_data
 
 def main():
@@ -77,6 +78,13 @@ def main():
     model = make_pipeline(MinMaxScaler(), KNeighborsRegressor(n_neighbors=5)) # 5 seems to give best results
     model.fit(X_train, y_train)
     print(model.score(X_valid, y_valid))
+
+    y_pred = model.predict(X_valid)
+
+    print("X_valid shape:", X_valid.shape)
+    print("y_valid shape:", y_valid.shape)
+    
+    plot_results(X_valid, y_valid, y_pred)
 
 if __name__=='__main__':
     main()

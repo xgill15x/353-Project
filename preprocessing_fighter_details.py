@@ -23,7 +23,7 @@ def main():
         df[column] = df[column].str.replace('%', '').astype('float') / 100.0
 
     numerical_columns = df.select_dtypes(include=['number'])
-    for column in numerical_columns:    # skips index
+    for column in numerical_columns:
         fill_na_with_median(df, column)
 
     # Write the DataFrame to a CSV file

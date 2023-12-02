@@ -28,6 +28,5 @@ def main():
     model.fit(X_train, y_train)
     print(model.score(X_valid, y_valid))
 
-
 if __name__=='__main__':
     main()
