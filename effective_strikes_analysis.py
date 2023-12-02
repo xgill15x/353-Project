@@ -5,6 +5,7 @@ import pingouin as pg
 
 import matplotlib.pyplot as plt
 import seaborn as sns
+import helper
 
 def further_preprocessing(stance_data):
     stance_data = stance_data[~(stance_data['Winner'] == 'Draw')] # We don't care about fights ending in a draw
@@ -12,24 +13,24 @@ def further_preprocessing(stance_data):
     stance_data.reset_index(drop=True, inplace=True)
     return stance_data
 
-def draw_plots(types_list):
-    # Create histograms
-    plt.figure(figsize=(12, 8))
+# def draw_strike_plots(types_list):
+#     # Create histograms
+#     plt.figure(figsize=(12, 8))
 
-    plt.subplot(2, 3, 1)
-    sns.histplot(types_list[0], kde=True)
-    plt.title('Head strike counts in Head-strike heavy wins')
+#     plt.subplot(2, 3, 1)
+#     sns.histplot(types_list[0], kde=True)
+#     plt.title('Head strike counts in Head-strike heavy wins')
 
-    plt.subplot(2, 3, 2)
-    sns.histplot(types_list[1], kde=True)
-    plt.title('Body strike counts in Body-strike heavy wins')
+#     plt.subplot(2, 3, 2)
+#     sns.histplot(types_list[1], kde=True)
+#     plt.title('Body strike counts in Body-strike heavy wins')
 
-    plt.subplot(2, 3, 3)
-    sns.histplot(types_list[2], kde=True)
-    plt.title('Leg strike counts in Leg-strike heavy wins')
+#     plt.subplot(2, 3, 3)
+#     sns.histplot(types_list[2], kde=True)
+#     plt.title('Leg strike counts in Leg-strike heavy wins')
 
-    plt.tight_layout()
-    plt.show()
+#     plt.tight_layout()
+#     plt.show()
 
 def determine_dominant_strike(row):
     if ((row['Head_strikes'] > row['Leg_strikes']) & (row['Head_strikes'] > row['Body_strikes'])):
@@ -88,7 +89,7 @@ def main():
     # leg_strikes = np.log(leg_strikes)
 
     strike_types_list = [head_strikes, body_strikes, leg_strikes]
-    draw_plots(strike_types_list)
+    helper.draw_strike_plots(strike_types_list)
 
     # dealing with unequal sample sizes: https://www.statology.org/anova-unequal-sample-size/
     # data has unequal variance and roughly normal distribution => kruskal-wallis test

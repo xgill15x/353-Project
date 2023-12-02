@@ -1,19 +1,20 @@
 import pandas as pd
+import helper
 
-def fill_na_with_median(df, column_name):
-    median = df[column_name].median()
-    df[column_name] = df[column_name].fillna(value=median)
+# def fill_na_with_median(df, column_name):
+#     median = df[column_name].median()
+#     df[column_name] = df[column_name].fillna(value=median)
 
-def convert_height_to_inches(height):
-    if pd.isna(height):
-        return None
-    feet, inches = map(int, height.replace('"', '').split("'")) # seperate feet and inches, then convert to int
-    return feet * 12 + inches
+# def convert_foot_inches_to_inches(height):
+#     if pd.isna(height):
+#         return None
+#     feet, inches = map(int, height.replace('"', '').split("'")) # seperate feet and inches, then convert to int
+#     return feet * 12 + inches
 
 def main():
     df = pd.read_csv('raw_fighter_details.csv')
 
-    df['Height'] = df['Height'].apply(convert_height_to_inches)
+    df['Height'] = df['Height'].apply(helper.convert_foot_inches_to_inches)
     df['Weight'] = df['Weight'].str.replace(' lbs.', '').astype(float) # remove lbs suffix
     df['Reach'] = df['Reach'].str.replace('"', '', regex=True).astype(float) # remove inch symbol
     
@@ -24,7 +25,7 @@ def main():
 
     numerical_columns = df.select_dtypes(include=['number'])
     for column in numerical_columns:
-        fill_na_with_median(df, column)
+        helper.fill_na_with_median(df, column)
 
     # Write the DataFrame to a CSV file
     df.to_csv("preprocessed_fighter_details.csv", index=False)
