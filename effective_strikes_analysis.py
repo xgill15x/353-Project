@@ -1,36 +1,8 @@
 import pandas as pd
-import numpy as np
 from scipy import stats
 import pingouin as pg
 
-import matplotlib.pyplot as plt
-import seaborn as sns
 import helper
-
-def further_preprocessing(stance_data):
-    stance_data = stance_data[~(stance_data['Winner'] == 'Draw')] # We don't care about fights ending in a draw
-    stance_data.dropna(inplace=True)
-    stance_data.reset_index(drop=True, inplace=True)
-    return stance_data
-
-# def draw_strike_plots(types_list):
-#     # Create histograms
-#     plt.figure(figsize=(12, 8))
-
-#     plt.subplot(2, 3, 1)
-#     sns.histplot(types_list[0], kde=True)
-#     plt.title('Head strike counts in Head-strike heavy wins')
-
-#     plt.subplot(2, 3, 2)
-#     sns.histplot(types_list[1], kde=True)
-#     plt.title('Body strike counts in Body-strike heavy wins')
-
-#     plt.subplot(2, 3, 3)
-#     sns.histplot(types_list[2], kde=True)
-#     plt.title('Leg strike counts in Leg-strike heavy wins')
-
-#     plt.tight_layout()
-#     plt.show()
 
 def determine_dominant_strike(row):
     if ((row['Head_strikes'] > row['Leg_strikes']) & (row['Head_strikes'] > row['Body_strikes'])):
@@ -41,28 +13,10 @@ def determine_dominant_strike(row):
         return 'Leg'
 
 def main():
-    df = pd.read_csv("raw_total_fight_data.csv", sep=';')
-    df = further_preprocessing(df)
+    winner_strike_stats = helper.fight_strike_stats_for_winners("raw_total_fight_data.csv")
+    # print(winner_strike_stats)
 
-    winner_strike_stats = []
-    for index, row in df.iterrows():
-        winner_name = row['Winner']
-        winner_colour = ''
-
-        if (winner_name == row['R_fighter']):
-            winner_colour = 'R'
-        else:
-            winner_colour = 'B'
-
-        winner_head_strikes = row[winner_colour + "_HEAD"]
-        winner_body_strikes = row[winner_colour + "_BODY"]
-        winner_leg_strikes = row[winner_colour + "_LEG"]
-
-        winner_strike_stats.append({"Name": winner_name, "Head_strikes": winner_head_strikes, "Body_strikes": winner_body_strikes, "Leg_strikes": winner_leg_strikes})
-
-    winner_strike_stats = pd.DataFrame(winner_strike_stats) # contains winner names and strike stats
-    
-    # removing attempted strikes from the expressinon - we only care about the strikes that landed
+    # removing attempted strikes from the expression - we only care about the strikes that landed
     winner_strike_stats['Head_strikes'] = winner_strike_stats['Head_strikes'].str.split(' ').str[0].astype(int)
     winner_strike_stats['Body_strikes'] = winner_strike_stats['Body_strikes'].str.split(' ').str[0].astype(int)
     winner_strike_stats['Leg_strikes'] = winner_strike_stats['Leg_strikes'].str.split(' ').str[0].astype(int)

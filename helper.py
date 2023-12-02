@@ -13,11 +13,28 @@ def convert_foot_inches_to_inches(height):
     feet, inches = map(int, height.replace('"', '').split("'")) # seperate feet and inches, then convert to int
     return feet * 12 + inches
 
-def fighter_win_loss_stats(preprocessed_data):
+def further_preprocessing_for_removing_draws(data):
+    data = data[~(data['Winner'] == 'Draw')] # We don't care about fights ending in a draw
+    data.reset_index(drop=True, inplace=True)
+    return data
+
+def further_preprocessing_for_stance_analysis(data):
+    data = data[~(data['Winner'] == 'Draw')] # We don't care about fights ending in a draw
+    data.dropna(inplace=True)
+    data.reset_index(drop=True, inplace=True)
+    return data
+
+# ------------------------------------------------------------------------------------------
+
+# RETURN DATAFRAME W/ FIGHTER NAMES, WINS, LOSSES, WIN RATIO
+def fighter_win_loss_stats(preprocessed_data_csv):
+    fights_df = pd.read_csv(preprocessed_data_csv)
+    preprocessed_data_without_draws = further_preprocessing_for_removing_draws(fights_df)
+
     win_count_map = {}
     lose_count_map = {}
 
-    for index, row in preprocessed_data.iterrows():
+    for index, row in preprocessed_data_without_draws.iterrows():
         winner = row['Winner'][0]
         loser = 'B' # default value checked in following conditional
 
@@ -41,14 +58,21 @@ def fighter_win_loss_stats(preprocessed_data):
     
     return fighter_data
 
-def fighter_win_loss_stats_with_stance(preprocessed_data):
+# ------------------------------------------------------------------------------------------
+
+# RETURN DATAFRAME W/ FIGHTER NAMES, WINS, LOSSES, WIN RATIO, STANCE
+def fighter_win_loss_stats_with_stance(preprocessed_data_csv):
+    
+    df = pd.read_csv(preprocessed_data_csv)
+    preprocessed_data_for_stance_analysis = further_preprocessing_for_stance_analysis(df)
+    
     # Extract stances and names of all the winners
     winners_info = []
     losers_info = []
     win_count_map = {}
     lose_count_map = {}
 
-    for index, row in preprocessed_data.iterrows():
+    for index, row in preprocessed_data_for_stance_analysis.iterrows():
         winner = row['Winner'][0]
         loser = 'B' # default value checked in following conditional
 
@@ -85,6 +109,44 @@ def fighter_win_loss_stats_with_stance(preprocessed_data):
     fighter_data['Win_ratio'] = fighter_data['Win_count'] / (fighter_data['Win_count'] + fighter_data['Lose_count'])
 
     return fighter_data
+
+# ------------------------------------------------------------------------------------------
+
+# RETURN DATAFRAME W/ FIGHT HEAD STRIKES, BODY STRIKES, LEG STRIKES OF WINNING FIGHTERS OF EACH MATCH
+def fight_strike_stats_for_winners(raw_total_fight_data_csv):
+    df = pd.read_csv(raw_total_fight_data_csv, sep=';')
+    df = further_preprocessing_for_removing_draws(df)
+
+    winner_strike_stats = []
+    for index, row in df.iterrows():
+        winner_name = row['Winner']
+        winner_colour = ''
+
+        if (winner_name == row['R_fighter']):
+            winner_colour = 'R'
+        else:
+            winner_colour = 'B'
+
+        winner_head_strikes = row[winner_colour + "_HEAD"]
+        winner_body_strikes = row[winner_colour + "_BODY"]
+        winner_leg_strikes = row[winner_colour + "_LEG"]
+
+        winner_strike_stats.append({"Name": winner_name, "Head_strikes": winner_head_strikes, "Body_strikes": winner_body_strikes, "Leg_strikes": winner_leg_strikes})
+    
+    return pd.DataFrame(winner_strike_stats) # contains winner names and strike stats
+
+# ------------------------------------------------------------------------------------------
+
+# RETURN DATAFRAME W/ RED AND BLUE WINS SEPERATED
+def seperate_colour_wins(preprocessed_data_csv):
+    df = pd.read_csv(preprocessed_data_csv)
+    fight_data = further_preprocessing_for_removing_draws(df)
+    red_wins = fight_data[fight_data['Winner'] == 'Red']
+    blue_wins = fight_data[fight_data['Winner'] == 'Blue']
+
+    return red_wins, blue_wins
+
+# ------------------------------------------------------------------------------------------
 
 def draw_stance_plots(types_list):
     # Create histograms
@@ -128,6 +190,21 @@ def draw_strike_plots(types_list):
     plt.subplot(2, 3, 3)
     sns.histplot(types_list[2], kde=True)
     plt.title('Leg strike counts in Leg-strike heavy wins')
+
+    plt.tight_layout()
+    plt.show()
+
+def draw_colour_wins_plots(types_list):
+    # Create histograms
+    plt.figure(figsize=(12, 8))
+
+    plt.subplot(2, 3, 1)
+    sns.histplot(types_list[0], kde=True)
+    plt.title('Red wins per event')
+
+    plt.subplot(2, 3, 2)
+    sns.histplot(types_list[1], kde=True)
+    plt.title('Blue wins per event')
 
     plt.tight_layout()
     plt.show()

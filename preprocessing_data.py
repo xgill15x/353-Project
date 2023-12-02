@@ -1,10 +1,6 @@
 import pandas as pd
 import helper
 
-# def fill_na_with_median(df, column_name):
-#     median = df[column_name].median()
-#     df[column_name] = df[column_name].fillna(value=median)
-
 def main():
     df = pd.read_csv('data.csv')
 

@@ -1,16 +1,6 @@
 import pandas as pd
 import helper
 
-# def fill_na_with_median(df, column_name):
-#     median = df[column_name].median()
-#     df[column_name] = df[column_name].fillna(value=median)
-
-# def convert_foot_inches_to_inches(height):
-#     if pd.isna(height):
-#         return None
-#     feet, inches = map(int, height.replace('"', '').split("'")) # seperate feet and inches, then convert to int
-#     return feet * 12 + inches
-
 def main():
     df = pd.read_csv('raw_fighter_details.csv')
 

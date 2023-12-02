@@ -2,38 +2,9 @@ import pandas as pd
 import numpy as np
 from scipy import stats
 
-import matplotlib.pyplot as plt
-import seaborn as sns
-
-def further_preprocessing(stance_data):
-    stance_data = stance_data[~(stance_data['Winner'] == 'Draw')] # We don't care about fights ending in a draw
-    stance_data.dropna(inplace=True)
-    stance_data.reset_index(drop=True, inplace=True)
-    return stance_data
-
-def draw_plots(types_list):
-    # Create histograms
-    plt.figure(figsize=(12, 8))
-
-    plt.subplot(2, 3, 1)
-    sns.histplot(types_list[0], kde=True)
-    plt.title('Red wins per event')
-
-    plt.subplot(2, 3, 2)
-    sns.histplot(types_list[1], kde=True)
-    plt.title('Blue wins per event')
-
-    plt.tight_layout()
-    plt.show()
-
-def seperate_colour_wins(fight_data):
-    red_wins = fight_data[fight_data['Winner'] == 'Red']
-    blue_wins = fight_data[fight_data['Winner'] == 'Blue']
-
-    return red_wins, blue_wins
+import helper
 
 def wins_per_event(red_wins, blue_wins):
-    
     red_wins_per_event = red_wins.groupby('date').count()['R_fighter']
     blue_wins_per_event = blue_wins.groupby('date').count()['B_fighter']
 
@@ -43,10 +14,7 @@ def wins_per_event(red_wins, blue_wins):
     return colour_wins_per_event['red_wins_per_event'], colour_wins_per_event['blue_wins_per_event']
 
 def main():
-    df = pd.read_csv("preprocessed.csv")
-    df = further_preprocessing(df)
-
-    red_wins, blue_wins = seperate_colour_wins(df)
+    red_wins, blue_wins = helper.seperate_colour_wins("preprocessed_data.csv")
 
     red_wins_per_event, blue_wins_per_event = wins_per_event(red_wins, blue_wins)
 
@@ -59,10 +27,10 @@ def main():
     red_wins_per_event = np.sqrt(red_wins_per_event)
     blue_wins_per_event = np.sqrt(blue_wins_per_event)
     
-    draw_plots([red_wins_per_event, blue_wins_per_event])
+    helper.draw_colour_wins_plots([red_wins_per_event, blue_wins_per_event])
 
     levene_result = stats.levene(red_wins_per_event, blue_wins_per_event)
-    t_test_result = stats.ttest_ind(red_wins_per_event, blue_wins_per_event)
+    t_test_result = stats.ttest_ind(red_wins_per_event, blue_wins_per_event, equal_var=False)
 
     # Display the result
     print("Levene p-value:", levene_result.pvalue)
