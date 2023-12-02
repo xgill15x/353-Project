@@ -20,7 +20,7 @@ def further_preprocessing_for_removing_draws(data):
 
 def further_preprocessing_for_stance_analysis(data):
     data = data[~(data['Winner'] == 'Draw')] # We don't care about fights ending in a draw
-    data.dropna(inplace=True)
+    data.dropna(inplace=True) # Used to drop columns with no stance (stance is only column with null values)
     data.reset_index(drop=True, inplace=True)
     return data
 
