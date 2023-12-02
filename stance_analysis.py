@@ -9,7 +9,7 @@ def get_unique_stances(stance_data):
     return stance_data['R_Stance'].unique() # B_Stance contains the same values
 
 def main():
-    stance_data = helper.fighter_win_loss_stats_with_stance('preprocessed_data.csv')
+    stance_data = helper.fighter_win_loss_stats_with_stance('data_sets/preprocessed_data.csv')
     # print(stance_data)
 
     # Only want to keep people who have the competence to win with their stance (as we want to compare stances with ppl who represent them best)

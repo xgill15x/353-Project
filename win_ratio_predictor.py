@@ -13,10 +13,10 @@ def further_win_loss_preprocessing(data):
     return data
 
 def main():
-    fighter_win_ratios = helper.fighter_win_loss_stats('preprocessed_data.csv')[['Name', 'Win_ratio']] # remove no. of wins and losses - only extract win ratio
+    fighter_win_ratios = helper.fighter_win_loss_stats('data_sets/preprocessed_data.csv')[['Name', 'Win_ratio']] # remove no. of wins and losses - only extract win ratio
     # print(fighter_win_ratios)
 
-    fighters_df = pd.read_csv('preprocessed_fighter_details.csv')
+    fighters_df = pd.read_csv('data_sets/preprocessed_fighter_details.csv')
     fighters_df = fighters_df.drop(columns=['Stance', 'DOB'])
     fighters_df = fighters_df.rename(columns={'fighter_name': 'Name'})
     # print(fighter_df)

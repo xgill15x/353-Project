@@ -2,7 +2,7 @@ import pandas as pd
 import helper
 
 def main():
-    df = pd.read_csv('raw_fighter_details.csv')
+    df = pd.read_csv('data_sets/raw_fighter_details.csv')
 
     df['Height'] = df['Height'].apply(helper.convert_foot_inches_to_inches)
     df['Weight'] = df['Weight'].str.replace(' lbs.', '').astype(float) # remove lbs suffix
@@ -18,7 +18,7 @@ def main():
         helper.fill_na_with_median(df, column)
 
     # Write the DataFrame to a CSV file
-    df.to_csv("preprocessed_fighter_details.csv", index=False)
+    df.to_csv("data_sets/preprocessed_fighter_details.csv", index=False)
 
 if __name__=='__main__':
     main()

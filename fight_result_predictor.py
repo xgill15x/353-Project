@@ -15,7 +15,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.svm import SVC
 
 def main():
-    df = pd.read_csv('preprocessed_data.csv')
+    df = pd.read_csv('data_sets/preprocessed_data.csv')
 
     y = df['Winner'].values
 

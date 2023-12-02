@@ -13,7 +13,7 @@ def determine_dominant_strike(row):
         return 'Leg'
 
 def main():
-    winner_strike_stats = helper.fight_strike_stats_for_winners("raw_total_fight_data.csv")
+    winner_strike_stats = helper.fight_strike_stats_for_winners("data_sets/raw_total_fight_data.csv")
     # print(winner_strike_stats)
 
     # removing attempted strikes from the expression - we only care about the strikes that landed

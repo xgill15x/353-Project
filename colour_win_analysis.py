@@ -14,7 +14,7 @@ def wins_per_event(red_wins, blue_wins):
     return colour_wins_per_event['red_wins_per_event'], colour_wins_per_event['blue_wins_per_event']
 
 def main():
-    red_wins, blue_wins = helper.seperate_colour_wins("preprocessed_data.csv")
+    red_wins, blue_wins = helper.seperate_colour_wins("data_sets/preprocessed_data.csv")
 
     red_wins_per_event, blue_wins_per_event = wins_per_event(red_wins, blue_wins)
 
