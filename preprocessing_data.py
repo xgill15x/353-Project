@@ -14,7 +14,7 @@ def main():
         fill_na_with_median(df, column)
 
     # Write the DataFrame to a CSV file
-    df.to_csv("preprocessed.csv", index=False)
+    df.to_csv("preprocessed_data.csv", index=False)
 
 if __name__=='__main__':
     main()

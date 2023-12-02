@@ -42,17 +42,14 @@ def draw_plots(types_list):
     plt.tight_layout()
     plt.show()
 
-def main():
-    df = pd.read_csv('preprocessed.csv')
-    df = further_preprocessing(df)
-
+def fighter_win_loss_stats(preprocessed_data):
     # Extract stances and names of all the winners
     winners_info = []
     losers_info = []
     win_count_map = {}
     lose_count_map = {}
 
-    for index, row in df.iterrows():
+    for index, row in preprocessed_data.iterrows():
         winner = row['Winner'][0]
         loser = 'B' # default value checked in following conditional
 
@@ -83,10 +80,19 @@ def main():
     winners_and_count = winners_df.merge(win_count_df, on='Name') # merges winner's stances and win counts into single df
     losers_and_count = losers_df.merge(lose_count_df, on='Name')
     
-    stance_data = pd.merge(winners_and_count, losers_and_count, on=['Name', 'Stance'], how='outer') # combined df with all fighters stances and win/lose counts
-    stance_data['Lose_count'] = stance_data['Lose_count'].fillna(0) # if name not found in losses map, default to 0 losses
-    stance_data['Win_count'] = stance_data['Win_count'].fillna(0) # if name not found in wins map, default to 0 wins
-    stance_data['Win_ratio'] = stance_data['Win_count'] / (stance_data['Win_count'] + stance_data['Lose_count'])
+    fighter_data = pd.merge(winners_and_count, losers_and_count, on=['Name', 'Stance'], how='outer') # combined df with all fighters stances and win/lose counts
+    fighter_data['Lose_count'] = fighter_data['Lose_count'].fillna(0) # if name not found in losses map, default to 0 losses
+    fighter_data['Win_count'] = fighter_data['Win_count'].fillna(0) # if name not found in wins map, default to 0 wins
+    fighter_data['Win_ratio'] = fighter_data['Win_count'] / (fighter_data['Win_count'] + fighter_data['Lose_count'])
+
+    return fighter_data
+
+def main():
+    df = pd.read_csv('preprocessed_data.csv')
+    df = further_preprocessing(df)
+
+    stance_data = fighter_win_loss_stats(df)
+    # print(stance_data)
 
     # Only want to keep people who have the competence to win with their stance (as we want to compare stances with ppl who represent them best)
     stance_data = stance_data[(stance_data['Win_ratio']) > 0]
