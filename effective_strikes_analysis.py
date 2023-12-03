@@ -15,11 +15,6 @@ def determine_dominant_strike(row):
 def main():
     winner_strike_stats = helper.fight_strike_stats_for_winners("data_sets/raw_total_fight_data.csv")
     # print(winner_strike_stats)
-
-    # removing attempted strikes from the expression - we only care about the strikes that landed
-    winner_strike_stats['Head_strikes'] = winner_strike_stats['Head_strikes'].str.split(' ').str[0].astype(int)
-    winner_strike_stats['Body_strikes'] = winner_strike_stats['Body_strikes'].str.split(' ').str[0].astype(int)
-    winner_strike_stats['Leg_strikes'] = winner_strike_stats['Leg_strikes'].str.split(' ').str[0].astype(int)
     
     # adding dominant strike stat
     winner_strike_stats['dominant_strike'] = winner_strike_stats.apply(determine_dominant_strike, axis=1)
