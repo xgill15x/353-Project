@@ -1,15 +1,12 @@
 import pandas as pd
-from scipy.stats import f_oneway
-from statsmodels.stats.multicomp import pairwise_tukeyhsd
+from scipy.stats import levene, kruskal
+import pingouin as pg  
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
-# question: Is there a significant difference in the average significant strike accuracy across different weight classes?
-
-
 # Load the dataset
-data = pd.read_csv('data_sets/preprocessed_data.csv') 
+data = pd.read_csv('data_sets/preprocessed_data.csv')
 
 # Combine the Red and Blue fighters' data into one column
 data['combined_SIG_STR_pct'] = pd.concat([data['R_avg_SIG_STR_pct'], data['B_avg_SIG_STR_pct']], ignore_index=True)
@@ -17,26 +14,29 @@ data['combined_SIG_STR_pct'] = pd.concat([data['R_avg_SIG_STR_pct'], data['B_avg
 # Drop the NaN values
 data = data.dropna(subset=['combined_SIG_STR_pct', 'weight_class'])
 
-# Prepare the data for ANOVA
+# Prepare the data for Kruskal-Wallis test
 grouped_data = data.groupby('weight_class')
-anova_data = [group['combined_SIG_STR_pct'].tolist() for name, group in grouped_data]
-# Perform the ANOVA test
-anova_result = f_oneway(*anova_data)
+kw_data = [group['combined_SIG_STR_pct'].tolist() for name, group in grouped_data]
 
-# Output the ANOVA test result
-print(f"ANOVA result: F={anova_result.statistic}, p={anova_result.pvalue}")
+# check for equal variance
+levene_result = levene(*kw_data)
+print(f"Levene's test result: W={levene_result.statistic}, p={levene_result.pvalue}")
 
-# If the ANOVA is significant, proceed with Tukey's HSD
-if anova_result.pvalue < 0.05:
-    # Perform Tukey's HSD test
-    tukey = pairwise_tukeyhsd(endog=data['combined_SIG_STR_pct'],groups=data['weight_class'],alpha=0.05) 
-    # Print Tukey's test result
-    print(tukey.summary())
-    # You can also plot the results
-    fig = tukey.plot_simultaneous()    # Plot group confidence intervals
-    fig.savefig('conf_int_weightStrike.png')
+# Perform the Kruskal-Wallis test
+kw_result = kruskal(*kw_data)
+print(f"Kruskal-Wallis result: H={kw_result.statistic}, p={kw_result.pvalue}")
+
+# If the Kruskal-Wallis test is significant, proceed with Games-Howell test
+if kw_result.pvalue < 0.05:
+    # Perform Games-Howell test
+    gh_result = pg.pairwise_gameshowell(data=data, dv='combined_SIG_STR_pct', between='weight_class')
+    # Print result
+    print(gh_result)
 else:
-    print("ANOVA is not significant. No need for post hoc testing.")
+    print("Kruskal-Wallis test is not significant. No need for post hoc testing.")
+
+
+
 
 # Plotting the distribution of significant strike accuracy for each weight class using Seaborn and KDE
 # Calculate the number of weight classes
