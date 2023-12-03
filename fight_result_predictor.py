@@ -1,18 +1,8 @@
-import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-from skimage.color import lab2rgb
-from sklearn.naive_bayes import GaussianNB
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.ensemble import AdaBoostClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import FunctionTransformer
-from skimage import color
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.svm import SVC
 
 def main():
     df = pd.read_csv('data_sets/preprocessed_data.csv')
