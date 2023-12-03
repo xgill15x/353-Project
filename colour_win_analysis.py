@@ -24,13 +24,13 @@ def main():
     # print(red_wins_per_event_avg, blue_wins_per_event_avg)
     # -----------------------------------------------------------
 
-    red_wins_per_event = np.sqrt(red_wins_per_event)
-    blue_wins_per_event = np.sqrt(blue_wins_per_event)
+    red_wins_per_event_sqrt = np.sqrt(red_wins_per_event)
+    blue_wins_per_event_sqrt = np.sqrt(blue_wins_per_event)
     
-    helper.draw_colour_wins_plots([red_wins_per_event, blue_wins_per_event])
+    helper.draw_colour_wins_plots([red_wins_per_event, blue_wins_per_event, red_wins_per_event_sqrt, blue_wins_per_event_sqrt])
 
-    levene_result = stats.levene(red_wins_per_event, blue_wins_per_event)
-    t_test_result = stats.ttest_ind(red_wins_per_event, blue_wins_per_event, equal_var=False)
+    levene_result = stats.levene(red_wins_per_event_sqrt, blue_wins_per_event_sqrt)
+    t_test_result = stats.ttest_ind(red_wins_per_event_sqrt, blue_wins_per_event_sqrt, equal_var=False)
 
     # Display the result
     print("Levene p-value:", levene_result.pvalue)

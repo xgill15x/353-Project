@@ -133,7 +133,14 @@ def fight_strike_stats_for_winners(raw_total_fight_data_csv):
 
         winner_strike_stats.append({"Name": winner_name, "Head_strikes": winner_head_strikes, "Body_strikes": winner_body_strikes, "Leg_strikes": winner_leg_strikes})
     
-    return pd.DataFrame(winner_strike_stats) # contains winner names and strike stats
+    winner_strike_stats = pd.DataFrame(winner_strike_stats)
+    
+    # removing attempted strikes from the expression - we only care about the strikes that landed
+    winner_strike_stats['Head_strikes'] = winner_strike_stats['Head_strikes'].str.split(' ').str[0].astype(int)
+    winner_strike_stats['Body_strikes'] = winner_strike_stats['Body_strikes'].str.split(' ').str[0].astype(int)
+    winner_strike_stats['Leg_strikes'] = winner_strike_stats['Leg_strikes'].str.split(' ').str[0].astype(int)
+    
+    return winner_strike_stats # contains winner names and strike stats
 
 # ------------------------------------------------------------------------------------------
 
@@ -198,13 +205,21 @@ def draw_colour_wins_plots(types_list):
     # Create histograms
     plt.figure(figsize=(12, 8))
 
-    plt.subplot(1, 2, 1)
+    plt.subplot(2, 2, 1)
     sns.histplot(types_list[0], kde=True)
     plt.title('Red wins per event')
 
-    plt.subplot(1, 2, 2)
+    plt.subplot(2, 2, 2)
     sns.histplot(types_list[1], kde=True)
     plt.title('Blue wins per event')
+
+    plt.subplot(2, 2, 3)
+    sns.histplot(types_list[2], kde=True)
+    plt.title('Blue wins per event (sqrt)')
+
+    plt.subplot(2, 2, 4)
+    sns.histplot(types_list[3], kde=True)
+    plt.title('Blue wins per event (sqrt)')
 
     plt.tight_layout()
     plt.show()
