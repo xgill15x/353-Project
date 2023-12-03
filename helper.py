@@ -179,15 +179,15 @@ def draw_strike_plots(types_list):
     # Create histograms
     plt.figure(figsize=(12, 8))
 
-    plt.subplot(2, 3, 1)
+    plt.subplot(1, 3, 1)
     sns.histplot(types_list[0], kde=True)
     plt.title('Head strike counts in Head-strike heavy wins')
 
-    plt.subplot(2, 3, 2)
+    plt.subplot(1, 3, 2)
     sns.histplot(types_list[1], kde=True)
     plt.title('Body strike counts in Body-strike heavy wins')
 
-    plt.subplot(2, 3, 3)
+    plt.subplot(1, 3, 3)
     sns.histplot(types_list[2], kde=True)
     plt.title('Leg strike counts in Leg-strike heavy wins')
 
@@ -198,11 +198,11 @@ def draw_colour_wins_plots(types_list):
     # Create histograms
     plt.figure(figsize=(12, 8))
 
-    plt.subplot(2, 3, 1)
+    plt.subplot(1, 2, 1)
     sns.histplot(types_list[0], kde=True)
     plt.title('Red wins per event')
 
-    plt.subplot(2, 3, 2)
+    plt.subplot(1, 2, 2)
     sns.histplot(types_list[1], kde=True)
     plt.title('Blue wins per event')
 
