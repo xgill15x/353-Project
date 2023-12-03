@@ -6,9 +6,6 @@ from scipy.stats import chi2_contingency
 
 data = pd.read_csv('data_sets/preprocessed_data.csv') 
 
-
-#question: Do certain weightclasses commit to a certain type of finish/win_by methods
-
 # Creating new columns that combine R and B win types
 data['Total_win_by_Decision_Split'] = data['R_win_by_Decision_Split'] + data['B_win_by_Decision_Split']
 data['Total_win_by_Decision_Unanimous'] = data['R_win_by_Decision_Unanimous'] + data['B_win_by_Decision_Unanimous']
