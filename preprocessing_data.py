@@ -9,6 +9,7 @@ def main():
         helper.fill_na_with_median(df, column)
 
     # Write the DataFrame to a CSV file
+    helper.create_folder('data_sets')
     df.to_csv("data_sets/preprocessed_data.csv", index=False)
 
 if __name__=='__main__':

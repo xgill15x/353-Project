@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import os
 
 def fill_na_with_median(df, column_name):
     median = df[column_name].median()
@@ -23,6 +24,11 @@ def further_preprocessing_for_stance_analysis(data):
     data.dropna(inplace=True) # Used to drop columns with no stance (stance is only column with null values)
     data.reset_index(drop=True, inplace=True)
     return data
+
+def create_folder(folder_path):
+    if not os.path.exists(folder_path):
+        # If it doesn't exist, create the folder
+        os.makedirs(folder_path)
 
 # ------------------------------------------------------------------------------------------
 
@@ -184,7 +190,10 @@ def draw_stance_plots(types_list):
     plt.title('Sideways Stance')
 
     plt.tight_layout()
-    plt.show()
+
+    create_folder('plots')
+    plt.savefig('plots/stance_win_plots.png', bbox_inches='tight')
+    # plt.show()
 
 def draw_strike_plots(types_list):
     # Create histograms
@@ -203,7 +212,10 @@ def draw_strike_plots(types_list):
     plt.title('Leg strike counts in Leg-strike heavy wins')
 
     plt.tight_layout()
-    plt.show()
+
+    create_folder('plots')
+    plt.savefig('plots/strike_types_plot.png', bbox_inches='tight')
+    # plt.show()
 
 def draw_colour_wins_plots(types_list):
     # Create histograms
@@ -219,14 +231,17 @@ def draw_colour_wins_plots(types_list):
 
     plt.subplot(2, 2, 3)
     sns.histplot(types_list[2], kde=True)
-    plt.title('Blue wins per event (sqrt)')
+    plt.title('Red wins per event (sqrt)')
 
     plt.subplot(2, 2, 4)
     sns.histplot(types_list[3], kde=True)
     plt.title('Blue wins per event (sqrt)')
 
     plt.tight_layout()
-    plt.show()
+
+    create_folder('plots')
+    plt.savefig('plots/colour_wins_plot.png', bbox_inches='tight')
+    # plt.show()
 
 def plot_win_ratio_predictor(X_valid, y_valid, y_pred):
     X_range = np.arange(0, X_valid.shape[0]).reshape(-1, 1)
@@ -241,4 +256,7 @@ def plot_win_ratio_predictor(X_valid, y_valid, y_pred):
     plt.title('KNN Regression: True vs Predicted values')
 
     plt.gca().set_aspect(125, adjustable='box')  # Adjust the aspect ratio
-    plt.show()
+
+    create_folder('plots')
+    plt.savefig('plots/win_ratio_predictor_plot', bbox_inches='tight')
+    # plt.show()
