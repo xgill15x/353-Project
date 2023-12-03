@@ -1,13 +1,11 @@
 
 import pandas as pd
 from scipy.stats import chi2_contingency
-from scipy.stats import f_oneway
 
 # Load the dataset
 
 data = pd.read_csv('data_sets/preprocessed_data.csv') 
 
-#is there relation between color and result before jason color
 
 #question: Do certain weightclasses commit to a certain type of finish/win_by methods
 
@@ -19,8 +17,7 @@ data['Total_win_by_Submission'] = data['R_win_by_Submission'] + data['B_win_by_S
 data['Total_win_by_TKO_Doctor_Stoppage'] = data['R_win_by_TKO_Doctor_Stoppage'] + data['B_win_by_TKO_Doctor_Stoppage']
 
 # Selecting relevant columns for the updated contingency table
-updated_finish_types = ['Total_win_by_Decision_Split', 'Total_win_by_Decision_Unanimous', 
-                        'Total_win_by_KO/TKO', 'Total_win_by_Submission', 'Total_win_by_TKO_Doctor_Stoppage']
+updated_finish_types = ['Total_win_by_Decision_Split', 'Total_win_by_Decision_Unanimous', 'Total_win_by_KO/TKO', 'Total_win_by_Submission', 'Total_win_by_TKO_Doctor_Stoppage']
 updated_contingency_table = data[['weight_class'] + updated_finish_types]
 
 # Summing up the counts for each weight class and combined finish type
