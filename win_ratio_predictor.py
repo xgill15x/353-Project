@@ -7,11 +7,6 @@ from sklearn.neighbors import KNeighborsRegressor
 
 import helper
 
-def further_win_loss_preprocessing(data):
-    data = data[~(data['Winner'] == 'Draw')] # We don't care about fights ending in a draw
-    data.reset_index(drop=True, inplace=True)
-    return data
-
 def main():
     fighter_win_ratios = helper.fighter_win_loss_stats('data_sets/preprocessed_data.csv')[['Name', 'Win_ratio']] # remove no. of wins and losses - only extract win ratio
     # print(fighter_win_ratios)

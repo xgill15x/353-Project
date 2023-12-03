@@ -10,6 +10,8 @@ def main():
 
     # Write the DataFrame to a CSV file
     helper.create_folder('data_sets')
+    helper.create_folder('plots')
+
     df.to_csv("data_sets/preprocessed_data.csv", index=False)
 
 if __name__=='__main__':

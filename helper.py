@@ -191,7 +191,6 @@ def draw_stance_plots(types_list):
 
     plt.tight_layout()
 
-    create_folder('plots')
     plt.savefig('plots/stance_win_plots.png', bbox_inches='tight')
     # plt.show()
 
@@ -213,7 +212,6 @@ def draw_strike_plots(types_list):
 
     plt.tight_layout()
 
-    create_folder('plots')
     plt.savefig('plots/strike_types_plot.png', bbox_inches='tight')
     # plt.show()
 
@@ -239,7 +237,6 @@ def draw_colour_wins_plots(types_list):
 
     plt.tight_layout()
 
-    create_folder('plots')
     plt.savefig('plots/colour_wins_plot.png', bbox_inches='tight')
     # plt.show()
 
@@ -257,6 +254,5 @@ def plot_win_ratio_predictor(X_valid, y_valid, y_pred):
 
     plt.gca().set_aspect(125, adjustable='box')  # Adjust the aspect ratio
 
-    create_folder('plots')
     plt.savefig('plots/win_ratio_predictor_plot', bbox_inches='tight')
     # plt.show()
