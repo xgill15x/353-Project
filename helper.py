@@ -117,6 +117,10 @@ def fight_strike_stats_for_winners(raw_total_fight_data_csv):
     df = pd.read_csv(raw_total_fight_data_csv, sep=';')
     df = further_preprocessing_for_removing_draws(df)
 
+    numerical_columns = df.select_dtypes(include=['number'])
+    for column in numerical_columns:
+        fill_na_with_median(df, column)
+
     winner_strike_stats = []
     for index, row in df.iterrows():
         winner_name = row['Winner']
