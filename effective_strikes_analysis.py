@@ -51,6 +51,8 @@ def main():
     strike_types_and_counts = pd.concat([head_strikes, body_strikes, leg_strikes], axis=1, keys=['head_strikes', 'body_strikes', 'leg_strikes'])    
     melted_df = strike_types_and_counts.melt().dropna()
 
+    # games-howell handles unequal sample sizes much better than tukey
+    # http://bayes.acs.unt.edu:8083/BayesContent/class/Jon/ISSS_SC/Module009/isss_m91_onewayanova/node7.html
     posthoc = pg.pairwise_gameshowell(data=melted_df, dv='value', between='variable')
 
     print(posthoc)

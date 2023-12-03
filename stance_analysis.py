@@ -55,6 +55,8 @@ def main():
     stance_win_ratios = pd.concat([orthodox, southpaw, switch], axis=1, keys=['orthodox', 'southpaw', 'switch'])    
     melted_df = stance_win_ratios.melt().dropna()
 
+    # games-howell handles unequal sample sizes much better than tukey
+    # http://bayes.acs.unt.edu:8083/BayesContent/class/Jon/ISSS_SC/Module009/isss_m91_onewayanova/node7.html
     posthoc = pg.pairwise_gameshowell(data=melted_df, dv='value', between='variable')
 
     print(posthoc)
