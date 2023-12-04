@@ -83,13 +83,11 @@ td_transformed = [combined_data[combined_data['Weight_Class'] == wc]['Transforme
 kd_original = [combined_data[combined_data['Weight_Class'] == wc]['Knockdown_Avg'].tolist() for wc in selected_weight_classes]
 kd_transformed = [combined_data[combined_data['Weight_Class'] == wc]['Transformed_KD'].tolist() for wc in selected_weight_classes]
 
-"""
-Uncomment to see the plots:
 plot_with_kde_from_df(td_original, selected_weight_classes, "Original Takedown Percentage")
 plot_with_kde_from_df(td_transformed, selected_weight_classes, "Transformed Takedown Percentage")
 plot_with_kde_from_df(kd_original, selected_weight_classes, "Original Knockdown Average")
 plot_with_kde_from_df(kd_transformed, selected_weight_classes, "Transformed Knockdown Average")
-"""
+
 
 
 """
