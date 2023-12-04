@@ -1,3 +1,10 @@
+"""
+Author: Jason Gill
+
+Description:
+This file contains a preprocessing script for the `data.csv` dataset
+"""
+
 import pandas as pd
 import helper
 

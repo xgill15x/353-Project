@@ -1,3 +1,10 @@
+"""
+Author: Jason Gill
+
+Description:
+This file contains a preprocessing script for the `raw_fighter_details.csv` dataset
+"""
+
 import pandas as pd
 import helper
 
