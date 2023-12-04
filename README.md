@@ -44,12 +44,14 @@ pip3 install matplotlib seaborn
 python3 colour_win_analysis.py
 python3 effective_strikes_analysis.py
 python3 stance_analysis.py
-python3 fight_result_predictor.py
-python3 win_ratio_predictor.py
+python3 p4p_analysis.py
+python3 best_grappler_analysis.py
+python3 best_striker_analysis.py
+python3 takedown_knockdown_analysis.py
 python3 strikeAcc_by_weight_analysis.py
 python3 finishes_by_weight_analysis.py
-
-more to be added after names have been changed for consistency
+python3 fight_result_predictor.py
+python3 win_ratio_predictor.py
 ```
 
 **Note:** Sample files were not included in our project because our datasets are not extremely large and our programs run fast. As a result, the above python analysis/predictor files do not require input/output arguments, as they inherently operate on the complete datasets.
