@@ -34,7 +34,7 @@ pip3 install matplotlib seaborn
 
 ## Order of Execution
 
-**Note:** Sample files were not included because our datasets are not extremely large. As a result, the following python analysis/predictor files do not require input/output arguments, as they inherently operate on the complete datasets.
+**Note:** Running the preprocessing scripts (steps 1 and 2) are crucial for the rest of the programs to run
 
 1. `python3 preprocessing_data.py`
 2. `python3 preprocessing_fighter_details.py`
