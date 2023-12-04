@@ -40,7 +40,7 @@ pip3 install matplotlib seaborn
 2. `python3 preprocessing_fighter_details.py`
 3. After preprocessing, the following files may be run in any order as they answer different analysis questions.
 
-**Note:** Sample files were not included because our datasets are not extremely large and our programs run fast. As a result, the following python analysis/predictor files do not require input/output arguments, as they inherently operate on the complete datasets.
+**Note:** Sample files were not included in our project because our datasets are not extremely large and our programs run fast. As a result, the following python analysis/predictor files do not require input/output arguments, as they inherently operate on the complete datasets.
 
 ```bash
 python3 colour_win_analysis.py
