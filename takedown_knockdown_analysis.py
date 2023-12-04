@@ -69,19 +69,6 @@ def plot_with_kde_from_df(data_lists, weight_classes, title_prefix):
         plt.legend()
         plt.show()
 
-def plot_without_kde_from_df(data_lists, weight_classes, title_prefix):
-    for data, weight_class in zip(data_lists, weight_classes):
-        plt.figure(figsize=(10, 6))
-        counts, bin_edges = np.histogram(data, bins=20, density=True)
-        bin_centers = (bin_edges[:-1] + bin_edges[1:]) / 2
-        plt.plot(bin_centers, counts, label=f"{title_prefix} in {weight_class}")
-        plt.title(f'{title_prefix} in {weight_class}')
-        plt.xlabel('Value')
-        plt.ylabel('Frequency')
-        plt.legend()
-        plt.show()
-
-
 
 
 # We note that the distribution is right-skewed for both takedown and knockdown values
