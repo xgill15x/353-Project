@@ -42,7 +42,7 @@ def main():
 
     # Display the result
     print("Levene p-value:", levene_result.pvalue)
-    print("T_test p-value:", t_test_result.pvalue)
+    print("T_test_statistic (Group1 - Red; Group2 - Blue):", t_test_result.statistic, "T_test p-value:", t_test_result.pvalue)
 
 if __name__=='__main__':
     main()
