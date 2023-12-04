@@ -46,6 +46,8 @@ python3 effective_strikes_analysis.py
 python3 stance_analysis.py
 python3 fight_result_predictor.py
 python3 win_ratio_predictor.py
+python3 strikeAcc_by_weight_analysis.py
+python3 finishes_by_weight_analysis.py
 
 more to be added after names have been changed for consistency
 ```
