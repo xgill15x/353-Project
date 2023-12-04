@@ -19,13 +19,14 @@ updated_contingency_table = data[['weight_class'] + updated_finish_types]
 
 # Summing up the counts for each weight class and combined finish type
 updated_contingency_table = updated_contingency_table.groupby('weight_class').sum()
-print(updated_contingency_table)
 # Performing the Chi-Square Test on the updated contingency table
 _, p_updated, _, _ = chi2_contingency(updated_contingency_table)
-
-
-#print(updated_contingency_table)
 print("chi-squared p-value:", p_updated)
+print(updated_contingency_table)
+
+
+
+
 
 
 
