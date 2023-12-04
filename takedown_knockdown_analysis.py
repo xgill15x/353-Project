@@ -18,11 +18,20 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy.stats import kruskal, f_oneway, levene
 import pingouin as pg
-import scikit_posthocs as sp
+
+def plot_with_kde_from_df(data_lists, weight_classes, title_prefix):
+    for data, weight_class in zip(data_lists, weight_classes):
+        plt.figure(figsize=(10, 6))
+        sns.kdeplot(data, label=f"{title_prefix} in {weight_class}")
+        plt.title(f'{title_prefix} in {weight_class}')
+        plt.xlabel('Value')
+        plt.ylabel('Density')
+        plt.legend()
+        plt.show()
 
 
 # Load the dataset
-file_path = 'preprocessed.csv'
+file_path = 'data_sets/preprocessed_data.csv'
 ufc_data = pd.read_csv(file_path)
 
 # Define the selected weight classes
@@ -54,22 +63,6 @@ for weight_class in selected_weight_classes:
     
     # Append to the combined DataFrame
     combined_data = pd.concat([combined_data, temp_df], ignore_index=True)
-
-
-
-
-
-def plot_with_kde_from_df(data_lists, weight_classes, title_prefix):
-    for data, weight_class in zip(data_lists, weight_classes):
-        plt.figure(figsize=(10, 6))
-        sns.kdeplot(data, label=f"{title_prefix} in {weight_class}")
-        plt.title(f'{title_prefix} in {weight_class}')
-        plt.xlabel('Value')
-        plt.ylabel('Density')
-        plt.legend()
-        plt.show()
-
-
 
 # We note that the distribution is right-skewed for both takedown and knockdown values
 # Applying square root transformation to the takedown and knockdown data
@@ -115,18 +108,18 @@ kruskal_kd_result = kruskal(*kd_original)
 print("Kruskal-Wallis Test Result on Original Knockdown Data:", kruskal_kd_result)
 
 
+# commented out, but left for debugging/curiosity
+# print("\nTD\n")
 
-print("\nTD\n")
+# # Checking the sample sizes for each weight class in the transformed takedown data
+# for wc, data in zip(selected_weight_classes, td_transformed):
+#     print(f"Sample size for {wc}: {len(data)}")
 
-# Checking the sample sizes for each weight class in the transformed takedown data
-for wc, data in zip(selected_weight_classes, td_transformed):
-    print(f"Sample size for {wc}: {len(data)}")
+# print("\nKD\n")
 
-print("\nKD\n")
-
-# Checking the sample sizes for each weight class in the original knockdown data
-for wc, data in zip(selected_weight_classes, kd_original):
-    print(f"Sample size for {wc}: {len(data)}")
+# # Checking the sample sizes for each weight class in the original knockdown data
+# for wc, data in zip(selected_weight_classes, kd_original):
+#     print(f"Sample size for {wc}: {len(data)}")
 
 
 # Since our sample sizes are different across the weight classes for takedown data - we proceed with Games-Howell test instead of Tukey
@@ -135,6 +128,7 @@ games_howell_data = combined_data[['Weight_Class', 'Transformed_TD_pct']]
 
 # Conducting the Games-Howell test
 posthoc_games_howell = pg.pairwise_gameshowell(data=games_howell_data, dv='Transformed_TD_pct', between='Weight_Class')
+print("\nTakedown posthoc:")
 print(posthoc_games_howell)
 
 
@@ -144,4 +138,5 @@ games_howell_kd_data = combined_data[['Weight_Class', 'Knockdown_Avg']]
 
 # Conducting the Games-Howell test
 posthoc_games_howell_kd = pg.pairwise_gameshowell(data=games_howell_kd_data, dv='Knockdown_Avg', between='Weight_Class')
+print("\nKnockdown posthoc:")
 print(posthoc_games_howell_kd)

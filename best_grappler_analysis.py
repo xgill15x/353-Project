@@ -9,7 +9,7 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
 # Load your dataset
-ufc_data = pd.read_csv('preprocessed.csv')
+ufc_data = pd.read_csv('data_sets/preprocessed_data.csv')
 
 # List of relevant grappling metrics with 'R_avg_' and 'B_avg_' prefixes
 grappling_metrics = ['TD_landed', 'TD_pct', 'SUB_ATT', 'REV']
