@@ -140,7 +140,3 @@ fighter_stats_aggregated = fighter_stats_aggregated.sort_values(by='p4p_score', 
 
 # Display the first few rows of the ranked dataframe
 print(fighter_stats_aggregated.head(10))
-
-# Write the ranked dataframe to a CSV file
-output_file_path = 'pound_for_pound_ranking.csv'  # Specify your desired output file path
-fighter_stats_aggregated.to_csv(output_file_path, index=False)
