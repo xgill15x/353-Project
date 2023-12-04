@@ -4,9 +4,11 @@ The purpose of this data analysis project is to explore and uncover meaningful i
 
 ## Authors
 
-- Jason Gill - [@xgill15x](https://github.com/xgill15x)
-- Yousef Haiba - [@YousefHaiba18](https://github.com/YousefHaiba18)
-- Vishaal Bharadwaj - [@Svishyy](https://github.com/Svishyy)
+**Note:** We initially commited all our work to a repository outside SFU's git enterprise repository. This was a mistake we caught near the end of the project. We were able to migrate the project to SFU's git servers but could not rewrite our git history with our SFU computing IDs. We apologize for any inconvience and have put our personal github usernames alongside our SFU computing IDs below:
+
+- Jason Gill - [@xgill15x](https://github.com/xgill15x) == jga132
+- Yousef Haiba - [@YousefHaiba18](https://github.com/YousefHaiba18) == yoh3
+- Vishaal Bharadwaj - [@Svishyy](https://github.com/Svishyy) == vbh
 
 ## Required Libraries
 
