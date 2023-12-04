@@ -1,3 +1,11 @@
+"""
+Author: Jason Gill
+
+Description:
+Our goal in this part of the project is to develop an ML model that is able to predict 
+the winner of the match given the fight statistics of both the red and blue fighter 
+"""
+
 import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split

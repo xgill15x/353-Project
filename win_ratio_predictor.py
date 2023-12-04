@@ -1,3 +1,11 @@
+"""
+Author: Jason Gill
+
+Description:
+Our goal in this part of the project is to develop an ML model that is able to predict a fighter's win ratio 
+given their fight statistics and information about their build (height, reach, etc.) 
+"""
+
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import make_pipeline

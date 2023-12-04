@@ -1,3 +1,11 @@
+"""
+Author: Jason Gill
+
+Description:
+Our goal in this program is to determine if there is a difference in the number of wins between red-gloved and blue-gloved fighters. 
+Further, we want to determine if one of the colours wins significantly more than the other. Conclusion can be found in the report.
+"""
+
 import pandas as pd
 import numpy as np
 from scipy import stats

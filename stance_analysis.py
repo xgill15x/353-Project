@@ -1,3 +1,12 @@
+"""
+Author: Jason Gill
+
+Description:
+Our goal is to determine the most effective stance that contributes to the most wins. 
+The stances to be analyzed are orthodox, southpaw, switch, open and sideways. Further, we want 
+to compare the differences between how effective each stance type is compared to the others.
+"""
+
 import pandas as pd
 import numpy as np
 from scipy import stats

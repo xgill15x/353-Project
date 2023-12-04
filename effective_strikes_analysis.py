@@ -1,3 +1,12 @@
+"""
+Author: Jason Gill
+
+Description:
+Our goal in this program is to determine the most effective type of strike that helps win UFC fights. 
+The strike types to be analyzed are head strikes, body strikes and leg strikes. Further, we want to compare the differences 
+between how effective each strike type is compared to the others.
+"""
+
 import pandas as pd
 from scipy import stats
 import pingouin as pg
