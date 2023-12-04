@@ -1,4 +1,9 @@
+"""
+Author: Yousef Haiba
 
+Description:
+Our goal in this program is to determine if specific finish or win-by methods are more common in certain weight classes.
+"""
 import pandas as pd
 from scipy.stats import chi2_contingency
 

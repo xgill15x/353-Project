@@ -1,3 +1,10 @@
+"""
+Author: Yousef Haiba
+
+Description:
+Our goal in this program is to find out if there is a significant difference in average significant strike accuracy across different weight classes.
+"""
+
 import pandas as pd
 from scipy.stats import levene, kruskal
 import pingouin as pg  
