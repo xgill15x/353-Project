@@ -52,7 +52,7 @@ python3 finishes_by_weight_analysis.py
 more to be added after names have been changed for consistency
 ```
 
-**Note:** Sample files were not included in our project because our datasets are not extremely large and our programs run fast. As a result, the following python analysis/predictor files do not require input/output arguments, as they inherently operate on the complete datasets.
+**Note:** Sample files were not included in our project because our datasets are not extremely large and our programs run fast. As a result, the above python analysis/predictor files do not require input/output arguments, as they inherently operate on the complete datasets.
 
 ## Files produced / Expected outputs
 
