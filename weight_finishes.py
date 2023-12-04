@@ -25,7 +25,7 @@ _, p_updated, _, _ = chi2_contingency(updated_contingency_table)
 
 
 #print(updated_contingency_table)
-print("p-value:", p_updated)
+print("chi-squared p-value:", p_updated)
 
 
 

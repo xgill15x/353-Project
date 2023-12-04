@@ -20,11 +20,11 @@ kw_data = [group['combined_SIG_STR_pct'].tolist() for name, group in grouped_dat
 
 # check for equal variance
 levene_result = levene(*kw_data)
-print(f"Levene's test result: W={levene_result.statistic}, p={levene_result.pvalue}")
+print(f"Levene's pvalue = {levene_result.pvalue}")
 
 # Perform the Kruskal-Wallis test
 kw_result = kruskal(*kw_data)
-print(f"Kruskal-Wallis result: H={kw_result.statistic}, p={kw_result.pvalue}")
+print(f"Kruskal-Wallis pvalue = {kw_result.pvalue}")
 
 # If the Kruskal-Wallis test is significant, proceed with Games-Howell test
 if kw_result.pvalue < 0.05:
@@ -68,4 +68,4 @@ for i in range(num_groups, len(axes)):
     axes[i].set_visible(False)
 
 # Save the entire figure as an image file named 'weight_stike_normal.png'
-plt.savefig('weight_stike_normal.png')
+plt.savefig('plots/weight_stike_normal.png')
