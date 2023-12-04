@@ -19,7 +19,12 @@ import seaborn as sns
 from scipy.stats import kruskal, f_oneway, levene
 import pingouin as pg
 
+import helper
+
 def plot_with_kde_from_df(data_lists, weight_classes, title_prefix):
+    helper.create_folder('plots/take_downs_per_wc_plots')
+    helper.create_folder('plots/knock_downs_per_wc_plots')
+
     for data, weight_class in zip(data_lists, weight_classes):
         plt.figure(figsize=(10, 6))
         sns.kdeplot(data, label=f"{title_prefix} in {weight_class}")
@@ -27,8 +32,18 @@ def plot_with_kde_from_df(data_lists, weight_classes, title_prefix):
         plt.xlabel('Value')
         plt.ylabel('Density')
         plt.legend()
-        plt.show()
 
+        if (title_prefix == 'Original Takedown Percentage'):
+            plt.savefig(f'plots/take_downs_per_wc_plots/td_perc_{weight_class}.png', bbox_inches='tight')
+
+        elif (title_prefix == 'Transformed Takedown Percentage'):
+            plt.savefig(f'plots/take_downs_per_wc_plots/trans_td_perc_{weight_class}.png', bbox_inches='tight')
+
+        elif (title_prefix == 'Original Knockdown Average'):
+            plt.savefig(f'plots/knock_downs_per_wc_plots/kd_avg_{weight_class}.png', bbox_inches='tight')
+
+        elif (title_prefix == 'Transformed Knockdown Average'):
+            plt.savefig(f'plots/knock_downs_per_wc_plots/trans_kd_avg_{weight_class}.png', bbox_inches='tight')
 
 # Load the dataset
 file_path = 'data_sets/preprocessed_data.csv'
