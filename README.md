@@ -1,6 +1,6 @@
 # UFC Dataset Analysis
 
-The purpose of this data analysis project is to explore and uncover meaningful insights within the UFC dataset which contains fighters' profiles, match outcomes, performance statistics and historical trends. Through statistical means, we will identify trends and key factors that contribute to success in the UFC
+The purpose of this data analysis project is to explore and uncover meaningful insights within the UFC dataset which contains fighters' profiles, match outcomes, performance statistics and historical trends. Through statistical means, we will identify patterns and key factors that contribute to success in the UFC
 
 ## Authors
 
