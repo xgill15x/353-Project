@@ -1,3 +1,10 @@
+"""
+Author: Jason Gill
+
+Description:
+This files contains various functions that help with further preprocessing and plot visualization
+"""
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
