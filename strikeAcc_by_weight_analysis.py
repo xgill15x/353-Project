@@ -75,4 +75,4 @@ for i in range(num_groups, len(axes)):
     axes[i].set_visible(False)
 
 # Save the entire figure as an image file named 'weight_stike_normal.png'
-plt.savefig('plots/weight_stike_normal.png')
+plt.savefig('plots/stikeAcc_by_weight.png')
