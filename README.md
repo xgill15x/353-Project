@@ -4,7 +4,7 @@ The purpose of this data analysis project is to explore and uncover meaningful i
 
 ## Authors
 
-**Note:** We initially commited all our work to a repository outside SFU's git enterprise repository. This was a mistake we caught near the end of the project. We were able to migrate the project to SFU's git servers but could not rewrite our git history with our SFU computing IDs. We apologize for any inconvience and have put our personal github usernames alongside our SFU computing IDs below (This mitigation attempt was approved by the professor):
+**Note:** We initially commited all our work to a repository outside SFU's git enterprise repository. This was a mistake we caught near the end of the project. We were able to migrate the project to SFU's git servers but could not rewrite our git history with our SFU computing IDs. We apologize for any inconvience and have put our personal github usernames alongside our SFU computing IDs below (this mitigation measure was approved by the professor):
 
 - Jason Gill: jga132 == [@xgill15x](https://github.com/xgill15x)
 - Yousef Haiba: yoh3 == [@YousefHaiba18](https://github.com/YousefHaiba18)
