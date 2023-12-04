@@ -99,9 +99,9 @@ plot_with_kde_from_df(kd_transformed, selected_weight_classes, "Transformed Knoc
 
 
 """
-Clearly our takedown data is normally distributed after the square root transformation is applied
-However our knockdown data is not normally distributed even after applying a square root transformation
-Hence we proceed with levene's test for equal variance for the takedown data to satisfy all conditions for ANOVA
+Clearly our takedown data is bimodal distributed (hence not normal) after the square root transformation is applied
+Our knockdown data is not normally distributed even after applying a square root transformation
+We test for equal variance in takedown data to see if we need to proceed with Games-Howell test for post-hoc
 We also test for equal variance in knockdown data to see if we need to proceed with Games-Howell test for post-hoc
 """
 # Levene's Test for equal variance
@@ -113,10 +113,10 @@ levene_kd_result = levene(*kd_original)
 print("Levene's Test Result for Knockdown Data:", levene_kd_result)
 
 
-# Since both conditions for ANOVA are satisfied by the takedown data - we proceed with ANOVA
-# ANOVA Test on transformed takedown data
-anova_td_result = f_oneway(*td_transformed)
-print("ANOVA Test Result on Transformed Takedown Data:", anova_td_result)
+# Since normality isn't met we proceed with Kruskal
+# Kruskal Test on transformed takedown data
+kruskal_td_result = kruskal(*td_transformed)
+print("Kruskal-Wallis Test Result on Transformed Takedown Data:", kruskal_td_result)
 
 # For our knockdown data - we proceed with a non-parametric test such as the Kruskal-Wallis Test (Since it is not equal variance, not normally distributed)
 kruskal_kd_result = kruskal(*kd_original)
