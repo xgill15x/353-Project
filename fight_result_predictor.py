@@ -16,7 +16,7 @@ def main():
 
     model = make_pipeline(MinMaxScaler(), KNeighborsClassifier(n_neighbors=50)) # 50 or 100 seem to work pretty well
     model.fit(X_train, y_train)
-    print(model.score(X_valid, y_valid))
+    print('Model Accuracy Score:', model.score(X_valid, y_valid))
 
 if __name__=='__main__':
     main()

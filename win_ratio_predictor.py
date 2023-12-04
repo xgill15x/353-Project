@@ -27,7 +27,7 @@ def main():
 
     model = make_pipeline(MinMaxScaler(), KNeighborsRegressor(n_neighbors=5)) # 5 seems to give best results
     model.fit(X_train, y_train)
-    print(model.score(X_valid, y_valid))
+    print('Model R-squared (R^2) Score:', model.score(X_valid, y_valid))
 
     y_pred = model.predict(X_valid)
     
