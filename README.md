@@ -12,7 +12,7 @@ The purpose of this data analysis project is to explore and uncover meaningful i
 
 ## Required Libraries
 
-**Note:** Python3 was the version used for this project
+**Note:** Python3 was the version used for this project (specifically >=3.9)
 
 Install pandas and numpy for data manipulation
 
